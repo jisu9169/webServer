@@ -1,5 +1,17 @@
 <%-include('./partials/header') %>
     <div class="page-content">
         <p> 우리 회사의 상품을 확인해보세요!</p>
+        <ul class="product-list">
+            <% products.forEach((product)=>{%>
+                <li class="product-item">
+                    <span class="product-name">
+                        <%=product.name%>
+                    </span>
+                    <span class="product-price">
+                        <%=product.price%>원
+                    </span>
+                </li>
+                <%})%>
+        </ul>
     </div>
     <%-include('./partials/footer') %>
