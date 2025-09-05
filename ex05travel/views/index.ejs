@@ -1,0 +1,28 @@
+<!--*header 불러오기-->
+<%-include("./partials/header")%>
+
+    <div class="page-header">
+        <h1>
+            <%=title%>
+        </h1>
+        <p>클릭하여 각 여행지의 상세 정보를 확인해보세요.</p>
+    </div>
+    <div class="card-container">
+        <% destinations.forEach(e=> {%>
+            <a href="/destination?id=<%=e.id%>" class="card-link">
+                <div class="card">
+                    <img src="<%=e.image%>" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <%=e.name%>
+                        </h3>
+                    </div>
+                </div>
+            </a>
+            <%});%>
+
+
+    </div>
+
+    <!--*footer 불러오기-->
+    <%-include("./partials/footer")%>
