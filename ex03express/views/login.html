@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+
+<body>
+    <!-- 서버로 값을 전송할 때 사용 되는 태그 http://localhost:3000/login -->
+    <!-- 실제 login 처리하는 경로 : http://localhost:3000/user/login  -->
+
+    <!-- action : 어디로 요청할 건지 주소 작성 (절대경로/상대경로) -->
+    <!-- 절대경로 : 외부서버로 요청, 상대경로로 작성하기에는 너무 복잡할 때 -->
+    <!-- name(필수) : 서버에서 각 값을 구별할 수 있는 식별자 -->
+
+    <!-- HTTP Method : 요청 메서드 정의 -->
+    <!-- form 태그에서 작성할 수 있는 Method : GET(기본값)/POST -->
+    <!-- Get : 사용자가 입력한 값을 url에 포함시켜서 요청(주소창에 입력값이 노출 -> 보안성 좋지 않음 ) -->
+    <!--  => 속도가 빠름 (검색 or 보안상 중요 않는 쿼리를 사용할 때) -->
+    <!-- 사용자가 입력한 값이 패킷의 head(url정보)에 추가됨 -->
+    <!-- Post : 사용자가 입력한 값을 패킷의 body부분에 감춰서 요청(노출 x -> 보안상 중요한 작업을 할때 적합 ) -->
+    <form action="/users/login" method='post'>
+        <input type="text" placeholder="아이디" name="id"> <br>
+        <input type="password" placeholder="비밀번호" name="pw"><br>
+        <input type="submit" value="로그인">
+    </form>
+</body>
+
+</html>
