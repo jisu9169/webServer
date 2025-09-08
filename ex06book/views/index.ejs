@@ -26,9 +26,11 @@
   </ul>
 
   <h2>새 책 추가</h2>
-  <form>
-    <input type="text" placeholder="제목" required>
-    <input type="text" placeholder="저자" required>
+  <!-- 현재 경로 : [GET] localhost:3000/books -->
+  <!-- 추가 요청 : [POST] localhost:3000/books -->
+  <form action="/books" method="post">
+    <input type="text" placeholder="제목" name="title" required>
+    <input type="text" placeholder="저자" name="author" required>
     <button type="submit">추가</button>
   </form>
 

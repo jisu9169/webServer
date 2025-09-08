@@ -31,4 +31,16 @@ router.get("/books", (req, res) => {
   //                    {books(키-변수이름 : books(책 배열))}
   res.render("index", { books: books });
 });
+
+// 책 추가
+router.post("/books", (req, res) => {
+  // 1. 요청 데이터 받기(body < app.js에 body-parser 사용할 수 있도록 하기)
+  const { title, author } = req.body;
+
+  const newBook = { id: books.length + 1, title: title, author: author };
+  books.push(newBook);
+
+  // index 렌더링 + books 배열 => /books (get) (redirect => get 요청)
+  res.redirect("/books");
+});
 module.exports = router;
