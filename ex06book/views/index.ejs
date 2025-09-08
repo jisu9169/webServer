@@ -11,7 +11,7 @@
   <h1>📚 책 목록</h1>
   <ul id="book-list">
     <% books.forEach((book)=> {%>
-      <li data-id="#">
+      <li data-id="<%= book.id %>">
         <span class="book-title" style="cursor:pointer; color:blue; text-decoration:underline;">
           <%= book.title %>
         </span>
@@ -38,6 +38,24 @@
   <div id="book-detail">제목을 클릭하면 상세정보가 여기에 표시됩니다.</div>
 
   <script>
+    // 사용자들은 책 제목을 클릭(태그 -> <span class ='book-title'> => 반복문 사용 각 태그에 이벤트 적용)
+    // getElementById = HTMLElement( 요소 1개)
+    // querySelectorAll => HTMLCollection(배열과 비슷)
+    document.querySelectorAll('.book-title').forEach((titleEl) => {
+      // titleEl(span태그) : 해당 태그가 클릭되었을 때 해당 부분에 출력되어 있는 책의 상세정보를 요청
+
+      titleEl.addEventListener('click', async (e) => { // e : 클릭이벤트가 발생하면 자동으로 들어오는 객체(이벤트에 대한 정보)
+        const li = e.target.closest('li'); // 클릭한 sapn 태그를 감싸는 li태그 가지고옴!
+        const bookId = li.getAttribute('data-id'); // 1, 2 ~
+        console.log(bookId);
+
+        // fetch 활용 서버로 책 상세정보 요청
+        // 1. then() .. ~ : 콜백함수
+        // 2. async/await : 코드가 간략해짐
+        const res = await fetch(`/books/${bookId}`);
+        console.log(res);
+      });
+    });
 
   </script>
 </body>

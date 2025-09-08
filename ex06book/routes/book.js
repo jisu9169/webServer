@@ -43,4 +43,22 @@ router.post("/books", (req, res) => {
   // index 렌더링 + books 배열 => /books (get) (redirect => get 요청)
   res.redirect("/books");
 });
+
+// 책 상세정보 보기(:id => 변수처럼 값이 달라질 수 있는 자리임을 표시!)
+router.get("/books/:id", (req, res) => {
+  // : id => url 경로에 포함되어 있는 값 => req.params
+  // req.query => 쿼리스트링 ?id=1
+  // req.body => POST 등으로 요청해서 데이터가 바디에 있을 때
+  // req.params => url(경로) 자체에 데이터가 포함되어 있을 때
+
+  // books 배열의 책 객체(book)를 조회해서 해당 책의 id가 선택한 id랑 같은 경우를 찾아줌
+  // => 결과 : 찾은 데이터 자체를 리턴(책 객체)
+  const findBook = books.find((book) => {
+    book.id === req.params.id;
+  });
+
+  // 책 정보 리턴(response), json(자바스크립트 객체) 형태 그대로 리턴(응답)
+  // res.send(); // 데이터만 응답(문자열, 숫자, 객체)
+  res.json(findBook);
+});
 module.exports = router;
