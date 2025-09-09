@@ -88,4 +88,17 @@ router.put("/books/:id", (req, res) => {
   console.log(book.title);
   res.json({ message: "수정 성공" });
 });
+
+router.delete("/books/:id", (req, res) => {
+  // 배열안에서 특정 도서 객체 삭제
+  // splice(시작인덱스, 몇개를 자를건지)
+  // findIndex : 찾고자하는 요소가 몇번 인덱스에 있는지
+  const index = books.findIndex((book) => {
+    return book.id == req.params.id;
+  });
+  // 만약에 찾고자 하는 id 값이 업을 경우(-1 반환)
+
+  books.splice(index, 1); // 배열에서 책 객체 삭제
+  res.json({ message: "삭제 성공" });
+});
 module.exports = router;
