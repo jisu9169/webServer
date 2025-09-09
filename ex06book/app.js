@@ -7,7 +7,7 @@ const app = express();
 
 // body 파싱
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json());
 // public 경로 지정
 app.use(express.static(path.join(__dirname, "public")));
 

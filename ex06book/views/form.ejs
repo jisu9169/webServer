@@ -1,20 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>책 수정</title>
   <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
+
 <body>
   <h1>책 수정</h1>
   <form id="update-form">
-    <input type="text" id="title" required>
-    <input type="text" id="author" required>
+    <input type="text" id="title" value="<%=book.title%>" required>
+    <input type="text" id="author" value="<%=book.author%>" required>
     <button type="submit">수정</button>
   </form>
 
   <script>
-    
+    // title or author 수정 후에 수정버튼(submit)을 누름 => 이벤트(submit)
+    const form = document.getElementById('update-form');
+
+    form.addEventListener('submit', async (e) => {
+      // submit 이벤트가 발생하면 무조건 작성되어 있는 값을 서버로 바로 제출(동기 방식)
+      // => submit 이벤트를 처리하지 않도록 일단 막아줘야함!
+      e.preventDefault();
+
+      const title = document.getElementById('title').value; // 실제 사용자가 작성한 값(input)
+      const author = document.getElementById('author').value;
+
+
+      // GET / DELETE (편지봉투) => HEAD에 데이터가 포함 (URL에 포함해줌)
+      // PUT / PATCH / POST (박스) => BODY에 데이터가 포함 (+ HEAD 데이터의 형식, 인코딩 방식 등..)
+      // fetch : 요청 데이터(json(객체))
+      const res = await fetch(`/books/<%=book.id%>`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: title,
+          author: author
+        }),
+      });
+      if (res.ok) {
+        // 알림창으로 수정 성공 
+        // 출력 -> index.ejs 로 이동
+        const data = await res.json();
+        alert(data.message + '✅');
+        location.href = '/books'; //books 로 get 방식으로 요청
+      }
+    });
+
   </script>
 </body>
+
 </html>
