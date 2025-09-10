@@ -13,7 +13,7 @@
     <!-- * 아래 li 태그 반복 출력-->
     <% todos.forEach(todo=> {%>
       <li data-id="<%=todo.id%>">
-        <input type="checkbox" class="toggle-check">
+        <input type="checkbox" class="toggle-check" <%=todo.completed?'checked':''%>>
         <span>
           <%=todo.task%>
         </span>
@@ -51,20 +51,32 @@
           method: 'DELETE',
         });
         //4. 200 OK 코드가 응답올 경우 해당 li 태그 화면에서 삭제
-        const data = await res.json();
-        alert(data.message + "✅");
         if (res.ok) {
+          const data = await res.json();
+          alert(data.message + "✅");
           // 책 리스트에서 삭제 된 책이 출력되는 부분을 삭제
           li.remove();
         } else { //   삭제가 안된 경우에는 '삭제 실패' 알림창 띄우기
           alert(" 삭제 실패❗");
         }
-
       });
     });
 
+    document.querySelectorAll('.toggle-check').forEach((check) => {
+      check.addEventListener('click', async (e) => {
+        const li = e.target.closest('li');
+        const todoId = li.getAttribute('data-id');
+        const res = await fetch(`/todos/${todoId}/completed`, {
+          method: 'PATCH',
+        });
 
-
+        if (res.ok) {
+          alert('완료 상태 변경 완료되었습니다.');
+        } else {
+          alert('삭제 실패했습니다.');
+        }
+      });
+    });
   </script>
 </body>
 

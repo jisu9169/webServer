@@ -4,7 +4,7 @@ const router = express.Router();
 // todo 정보 저장 데이터 베이스
 let todos = [
   { id: 1, task: "Node.js 공부하기", completed: false },
-  { id: 2, task: "운동하기", completed: false },
+  { id: 2, task: "운동하기", completed: true },
   { id: 3, task: "장보기", completed: false },
 ];
 
@@ -42,7 +42,6 @@ router.put("/todos/:id", (req, res) => {
   });
   const task = req.body.task;
   todo.task = task;
-  console.log(todo.task);
   res.json({ message: "수정 성공" });
 });
 
@@ -52,8 +51,22 @@ router.delete("/todos/:id", (req, res) => {
   const index = todos.findIndex((todo) => {
     return todo.id == req.params.id;
   });
-
+  if (index === -1) {
+    res.status(404).json({ message: "할 일을 찾을 수 없음" });
+  }
   todos.splice(index, 1);
   res.json({ message: "삭제 성공" });
 });
+
+router.patch("/todos/:id/completed", (req, res) => {
+  const todo = todos.find((todo) => {
+    return todo.id == req.params.id;
+  });
+  if (!todo) {
+    res.status(404).json({ message: "할 일을 찾을 수 없음" });
+  }
+  todo.completed = !todo.completed;
+  res.json({ message: "상태 수정 성공" });
+});
+
 module.exports = router;
