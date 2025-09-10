@@ -31,17 +31,17 @@
           task: task,
         }),
       });
+      //4. 200 OK 코드가 응답올 경우 '수정 완료' 알림창으로 출력 후에 최종적으로 index.ejs 페이지 띄워주기
       if (res.ok) {
         // 알림창으로 수정 성공 
         // 출력 -> index.ejs 로 이동
         const data = await res.json();
         alert(data.message + '✅');
-        location.href = '/todos'; //books 로 get 방식으로 요청
+        location.href = '/todos';
+      } else { //   삭제가 안된 경우에는 '수정 실패' 알림창 띄우기
+        alert("수정 실패❗");
       }
 
-
-      //4. 200 OK 코드가 응답올 경우 '수정 완료' 알림창으로 출력 후에 최종적으로 index.ejs 페이지 띄워주기
-      //   삭제가 안된 경우에는 '수정 실패' 알림창 띄우기
     });
   </script>
 </body>

@@ -39,13 +39,27 @@
     document.querySelectorAll(".delete-btn").forEach(btn => {
       btn.addEventListener("click", async (e) => {
         //1. 선택한 to-do 리스트의 id 값 가져오기
-
+        const li = e.target.closest('li');
+        const todoId = li.getAttribute('data-id');
         //2. '정말 삭제하시겠습니까?' 를 확인창으로 띄운 후 취소 선택 시 더이상 진행하지 않음
-
+        let userChoice = confirm("정말 삭제하시겠습니까?");
+        if (!userChoice) {
+          return;
+        }
         //3. 삭제 요청 경로로 요청 (fetch API 활용)
-
+        const res = await fetch(`/todos/${todoId}`, {
+          method: 'DELETE',
+        });
         //4. 200 OK 코드가 응답올 경우 해당 li 태그 화면에서 삭제
-        //   삭제가 안된 경우에는 '삭제 실패' 알림창 띄우기
+        const data = await res.json();
+        alert(data.message + "✅");
+        if (res.ok) {
+          // 책 리스트에서 삭제 된 책이 출력되는 부분을 삭제
+          li.remove();
+        } else { //   삭제가 안된 경우에는 '삭제 실패' 알림창 띄우기
+          alert(" 삭제 실패❗");
+        }
+
       });
     });
 

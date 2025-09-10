@@ -48,5 +48,12 @@ router.put("/todos/:id", (req, res) => {
 
 //5. 할 일 삭제 (localhost:3000/todos/아이디)
 //   -> 사용자가 선택한 todo를 삭제 (삭제 완료 후 삭제 성공 메세지 응답)
+router.delete("/todos/:id", (req, res) => {
+  const index = todos.findIndex((todo) => {
+    return todo.id == req.params.id;
+  });
 
+  todos.splice(index, 1);
+  res.json({ message: "삭제 성공" });
+});
 module.exports = router;
