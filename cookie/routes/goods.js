@@ -17,5 +17,8 @@ router.post("/loginCheck", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/logout", (req, res) => {});
+router.get("/logout", (req, res) => {
+  res.cookie("nick", "", { maxAge: 1 });
+  res.redirect('/');
+});
 module.exports = router;
