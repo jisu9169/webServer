@@ -19,6 +19,22 @@ router.post("/loginCheck", (req, res) => {
 
 router.get("/logout", (req, res) => {
   res.cookie("nick", "", { maxAge: 1 });
-  res.redirect('/');
+  res.redirect("/");
+});
+
+router.get("/goodsList", (req, res) => {
+  res.render("goodsList");
+});
+
+router.get("/goodsAdd", (req, res) => {
+  console.log(req.query.goods);
+  const goodsList = req.query.goods;
+  console.log(goodsList);
+  let id = 1;
+  goodsList.forEach((g) => {
+    res.cookie( "goods"+id++, g);
+  });
+
+  res.send("ok");
 });
 module.exports = router;
