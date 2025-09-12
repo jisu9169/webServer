@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const indexRouter = require("./routes/index");
+const aischoolRouter = require("./routes/aischool");
 
 // 세션을 사용하기위한 불러오기
 const cookieParser = require("cookie-parser");
@@ -31,6 +32,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use("/", indexRouter);
+app.use("/", aischoolRouter);
 
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
