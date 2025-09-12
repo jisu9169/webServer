@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aiList</title>
+</head>
+
+<body>
+    <% teacher.forEach(t=> { %>
+    <h3>
+        <% for (const [key, value] of Object.entries(t)) { %>
+            <%= key %> : <%= value %>    
+        <% } %>
+    </h3>
+    <hr>
+    <% }); %>
+</body>
+
+</html>
