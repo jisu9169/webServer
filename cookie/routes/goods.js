@@ -27,14 +27,13 @@ router.get("/goodsList", (req, res) => {
 });
 
 router.get("/goodsAdd", (req, res) => {
-  console.log(req.query.goods);
   const goodsList = req.query.goods;
   console.log(goodsList);
-  let id = 1;
-  goodsList.forEach((g) => {
-    res.cookie( "goods"+id++, g);
+
+  goodsList.forEach((g, i) => {
+    res.cookie("goods" + i, g);
   });
 
-  res.send("ok");
+  res.redirect("/");
 });
 module.exports = router;
