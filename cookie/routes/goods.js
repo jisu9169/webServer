@@ -40,13 +40,31 @@ router.get("/goodsAdd", (req, res) => {
 router.get("/myGoodsList", (req, res) => {
   // cookie의 이름만 가져오기
   const key = Object.keys(req.cookies);
-  console.log(req.cookies);
-  console.log(key);
-
   const cookiedData = { goods: [] };
   for (let i = 0; i < key.length; i++) {
-    cookiedData.goods.push(req.cookies[key[i]]);
+    if (key[i].includes("goods")) {
+      console.log("key[i] = " + key[i]);
+      cookiedData.goods.push(req.cookies[key[i]]);
+    }
   }
   res.render("myGoodsList", cookiedData);
 });
+
+router.get("/goodsRemove", (req, res) => {
+  // 쿠키 객체의 모든 키(쿠키 이름)를 가져옵니다.
+  const keys = Object.keys(req.cookies);
+
+  // 모든 쿠키 이름을 순회합니다.
+  for (let i = 0; i < keys.length; i++) {
+    const cookieName = keys[i];
+
+    if (cookieName.includes("goods")) {
+      res.clearCookie(cookieName);
+      console.log(`쿠키가 삭제되었습니다: ${cookieName}`);
+    }
+  }
+
+  res.redirect("/myGoodsList");
+});
+
 module.exports = router;
