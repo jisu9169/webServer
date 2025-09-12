@@ -36,4 +36,17 @@ router.get("/goodsAdd", (req, res) => {
 
   res.redirect("/");
 });
+
+router.get("/myGoodsList", (req, res) => {
+  // cookie의 이름만 가져오기
+  const key = Object.keys(req.cookies);
+  console.log(req.cookies);
+  console.log(key);
+
+  const cookiedData = { goods: [] };
+  for (let i = 0; i < key.length; i++) {
+    cookiedData.goods.push(req.cookies[key[i]]);
+  }
+  res.render("myGoodsList", cookiedData);
+});
 module.exports = router;
