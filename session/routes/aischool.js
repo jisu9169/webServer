@@ -26,12 +26,30 @@ router.get("/aiList", (req, res) => {
     { name: "조준영", nick: "초대형거인", age: 22, hobby: "아이들 보기" },
     { name: "양하영", nick: "짱구", age: 23, hobby: "예카 방문" },
     { name: "최황준", nick: "황진이", age: 24, hobby: "모르는 사람 만나기" },
-    { name: "박병관", nick: "호두아빠", age: 25, hobby: "유튜브 운영" }
+    { name: "박병관", nick: "호두아빠", age: 25, hobby: "유튜브 운영" },
   ];
 
   req.session.teacher = teacher;
 
-  res.render('aiList', req.session);
+  res.render("aiList", req.session);
 });
 
+router.get("/loginForm", (req, res) => {
+  res.render("loginForm");
+});
+
+router.post("/login", (req, res) => {
+  console.log(req.body); // 클라이언트에서 보낸 데이터 확인
+  // 로그인 로직 (예시: 아이디와 비밀번호 확인)
+  if (req.body.id === "123" && req.body.pw === "123") {
+    // 로그인 성공 시, index 템플릿에 사용자 정보를 전달
+    req.session.nick = "관리자";
+  }
+  res.render("index", req.session); // 객체 형태로 전달
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+});
 module.exports = router;

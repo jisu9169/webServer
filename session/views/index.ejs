@@ -11,7 +11,13 @@
     <a href="aiAddress"><button>사관학교 주소보기</button></a>
     <a href="aiInfo"><button>사관학교 정보보기</button></a>
     <a href="aiList"><button>사관학교 선생님 리스트</button></a>
-    <a href=""><button>사관학교 로그인</button></a>
+    <% if(typeof nick !== 'undefined'){%>
+        <%=nick%> 님 환영합니다!
+        <a href="logout">로그아웃</a>
+        <%}else{%>
+            <a href="loginForm"><button>사관학교 로그인</button></a>
+        <%}%>
+    
 </body>
 
 </html>
