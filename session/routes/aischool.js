@@ -52,4 +52,15 @@ router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
+
+router.get("/teamInfo", (req, res) => {
+  const teamInfo = {
+    name: "형준",
+    age: "20",
+    number: "010-****-****",
+    hobby: "공부",
+  };
+  console.log("1234123213");
+  res.render("teamInfo", teamInfo);
+});
 module.exports = router;
