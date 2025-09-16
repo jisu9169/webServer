@@ -30,7 +30,19 @@ router.get("/login", (req, res) => {
 
 router.post("/login", (req, res) => {
   console.log(req.body);
+  const { id, pw } = req.body;
+  const query =
+    "SELECT EXISTS(SELECT 1 FROM member WHERE id = ? AND pw = ?) AS user_exists";
 
-  res.send("ok");
+  conn.query(query, [id, pw], (err, rows) => {
+    console.log(rows);
+
+    if (rows[0].user_exists == 1) {
+      console.log("로그인 성공");
+    } else {
+      console.log("로그인 실패");
+    }
+    res.redirect("/");
+  });
 });
 module.exports = router;
