@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const conn = require("../config/db");
+const session = require("express-session");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -31,18 +32,20 @@ router.get("/login", (req, res) => {
 router.post("/login", (req, res) => {
   console.log(req.body);
   const { id, pw } = req.body;
-  const query =
-    "SELECT EXISTS(SELECT 1 FROM member WHERE id = ? AND pw = ?) AS user_exists";
+  const query = "select * from member WHERE id = ? AND pw = ?";
 
   conn.query(query, [id, pw], (err, rows) => {
     console.log(rows);
 
-    if (rows[0].user_exists == 1) {
+    if (rows.length > 0) {
       console.log("로그인 성공");
+      console.log(rows[0]);
+      req.session.info = rows[0];
+      res.render("index", req.session);
     } else {
       console.log("로그인 실패");
+      res.redirect("/");
     }
-    res.redirect("/");
   });
 });
 
@@ -80,4 +83,38 @@ router.post("/delete", (req, res) => {
   });
   res.redirect("/");
 });
+
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+});
+
+router.get("/list", (req, res) => {
+  // 모든 회원의 정보를 console에 출력하고 페이지에 ok를 응답하시오.
+  console.log("");
+  const query = "select * from member where id not in('admin')";
+
+  conn.query(query, (err, rows) => {
+    const listData = { list: rows };
+    res.render("list", listData);
+  });
+});
+
+router.get("/aDelete", (req, res) => {
+  const id = req.query.id;
+
+  const query = "delete from member where id = ?";
+
+  conn.query(query, id, (err, rows) => {
+    if (rows.affectedRows > 0) {
+      console.log("회원 삭제 성공!");
+    } else {
+      console.log("회원 삭제 실패");
+    }
+
+    res.redirect("/list");
+  });
+  
+});
+
 module.exports = router;
