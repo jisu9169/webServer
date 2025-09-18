@@ -45,4 +45,39 @@ router.post("/login", (req, res) => {
     res.redirect("/");
   });
 });
+
+router.get("/update", (req, res) => {
+  res.render("update");
+});
+
+router.post("/update", (req, res) => {
+  // 회원정보 수정기능을 구현
+  const { id, pw, nick } = req.body;
+  const query = "update member set nick = ? where id = ? and pw = ?";
+  conn.query(query, [nick, id, pw], (err, rows) => {
+    if (rows.affectedRows > 0) {
+      console.log("회원정보수정 성공!");
+    } else {
+      console.log("회원정보수정 실패...");
+    }
+  });
+  res.redirect("/");
+});
+
+router.get("/delete", (req, res) => {
+  res.render("delete");
+});
+
+router.post("/delete", (req, res) => {
+  const { id, pw } = req.body;
+  const query = "delete from member where id = ? and pw = ?";
+  conn.query(query, [id, pw], (err, rows) => {
+    if (rows.affectedRows > 0) {
+      console.log("탈퇴 성공");
+    } else {
+      console.log("탈퇴 실패");
+    }
+  });
+  res.redirect("/");
+});
 module.exports = router;
